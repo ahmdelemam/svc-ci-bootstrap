@@ -1,35 +1,35 @@
 ---
 name: build-chart
 on:
-  workflow_call
+  workflow_call:
 jobs:
   build:
-      runs-on: ubuntu-latest
-      steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.ACCESS_TOKEN }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.ACCESS_TOKEN }}
 
-      - name: build charts
-        shell: bash
-        run: |
-          git clone https://github.com/mohamedragab2024/k8s-lessons.git
-          mkdir -p charts
-          cp -r k8s-lessons/charts/* charts/
-          rm -rf k8s-lessons
-          REPO_NAME=${{ github.event.repository.name }}
-            for file in charts/**/*; do
-              if [ -f "$file" ]; then
-                sed -i "s#<CHART_NAME>#${REPO_NAME}#g" "$file"
-              fi
-            done
-            sed -i "s#<CHART_NAME>#${REPO_NAME}#g" charts/Chart.yaml
+    - name: build charts
+      shell: bash
+      run: |
+        git clone https://github.com/mohamedragab2024/k8s-lessons.git
+        mkdir -p charts
+        cp -r k8s-lessons/charts/* charts/
+        rm -rf k8s-lessons
+        REPO_NAME=${{ github.event.repository.name }}
+          for file in charts/**/*; do
+            if [ -f "$file" ]; then
+              sed -i "s#<CHART_NAME>#${REPO_NAME}#g" "$file"
+            fi
+          done
+          sed -i "s#<CHART_NAME>#${REPO_NAME}#g" charts/Chart.yaml
 
-      - name: upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: charts
-          path: charts
-          retention-days: 1
-          if-no-files-found: ignore
+    - name: upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: charts
+        path: charts
+        retention-days: 1
+        if-no-files-found: ignore
