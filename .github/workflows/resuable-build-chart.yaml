@@ -23,8 +23,8 @@ jobs:
       run: |
         VERSION=$(date +'%Y.%m.%d')-$(date +'%H%M')
         echo "Version: $VERSION"
-      echo "CHART_VERSION=$VERSION" >> "$GITHUB_ENV"
-      echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+        echo "CHART_VERSION=$VERSION" >> "$GITHUB_ENV"
+        echo "version=$VERSION" >> "$GITHUB_OUTPUT"
     
     - name: build charts
       shell: bash
