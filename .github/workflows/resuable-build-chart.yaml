@@ -6,6 +6,9 @@ on:
       service_name:
         required: true
         type: string
+      namespace:
+        required: true
+        type: string
     secrets:
       ACCESS_TOKEN:
         required: true
