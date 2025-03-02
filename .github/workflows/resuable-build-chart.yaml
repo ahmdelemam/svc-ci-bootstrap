@@ -23,7 +23,8 @@ jobs:
       run: |
         VERSION=$(date +'%Y.%m.%d')-$(date +'%H%M')
         echo "Version: $VERSION"
-        echo "CHART_VERSION=$VERSION" >> "$GITHUB_ENV"
+      echo "CHART_VERSION=$VERSION" >> "$GITHUB_ENV"
+      echo "version=$VERSION" >> "$GITHUB_OUTPUT"
     
     - name: build charts
       shell: bash
@@ -53,7 +54,7 @@ jobs:
       env:
        GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
       with:
-      tag_name: ${{ env.CHART_VERSION }}
-      release_name: Release ${{ env.CHART_VERSION }}
-      draft: false
-      prerelease: false
+        tag_name: ${{ steps.app_version.outputs.version }}
+        release_name: Release ${{ steps.app_version.outputs.version }}
+        draft: false
+        prerelease: false
