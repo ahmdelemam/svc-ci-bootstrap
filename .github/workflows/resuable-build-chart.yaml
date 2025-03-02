@@ -2,7 +2,7 @@
 name: build-chart
 on:
   workflow_call
-Jobs:
+jobs:
   build:
       runs-on: ubuntu-latest
       steps:
