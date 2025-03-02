@@ -2,14 +2,16 @@
 name: build-chart
 on:
   workflow_call:
+    inputs:
+      access_token:
+        required: false
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v4
-      with:
-        token: ${{ secrets.ACCESS_TOKEN }}
+      
 
     - name: build charts
       shell: bash
