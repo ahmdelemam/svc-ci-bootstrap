@@ -27,6 +27,5 @@ jobs:
       uses: ahmdelemam/svc-ci-bootstrap/actions/argocd-app-sync@main
       with:
        service_name: ${{ github.event.inputs.service_name }}
-      secrets:
-        ARGOCD_SERVER: ${{ secrets.ARGOCD_SERVER }}
-        ARGOCD_PASSWORD: ${{ secrets.ARGOCD_PASSWORD }}
+       ARGOCD_SERVER: ${{ secrets.ARGOCD_SERVER }}
+       ARGOCD_PASSWORD: ${{ secrets.ARGOCD_PASSWORD }}
