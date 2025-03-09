@@ -1,0 +1,51 @@
+name: "Argocd App Generate"
+description: "Generate ArgoCD application manifests"
+inputs:
+  service_name:
+    description: "Service name"
+    required: true
+  namespace:
+    description: "Namespace"
+    required: true
+runs:
+  using: "composite"
+  steps:
+     - name: generate argocd application
+       shell: bash
+       env:
+        APP_NAME: ${{ inputs.service_name }}
+        REPO_NAME: ${{ inputs.service_name }}
+        NAMESPACE: ${{ inputs.namespace }}
+       run: |
+        mkdir -p application
+        cat << EOF > application/argocd.tpl
+        apiVersion: argoproj.io/v1alpha1
+        kind: Application
+        metadata:
+          name: ${APP_NAME}
+          namespace: argocd
+          finalizers:
+          - resources-finalizer.argocd.argoproj.io
+        spec:
+          destination:
+            namespace: ${NAMESPACE}
+            server: https://kubernetes.default.svc
+          project: default
+          source:
+            path: charts
+            repoURL: https://github.com/mohamedragab2024/${REPO_NAME}.git
+            targetRevision: env/prod
+            helm:
+              valueFiles:
+                - values-live.yaml
+          syncPolicy:
+            automated:
+              prune: true
+              selfHeal: true
+              allowEmpty: true
+            syncOptions:
+              - CreateNamespace=true
+        EOF
+        envsubst < application/argocd.tpl > application/${APP_NAME}-argocd-app.yaml
+        rm -f application/argocd.tpl
+       

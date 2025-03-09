@@ -1,0 +1,29 @@
+name: 'setup argocd'
+description: 'Setup ArgoCD CLI'
+inputs:
+  argocd_version:
+    description: 'ArgoCD CLI version'
+    required: true
+    default: 'v2.10.0'
+runs:
+ using: "composite"
+ steps:
+    - name: 'Download ArgoCD CLI'
+      shell: bash
+      env:
+        ARGOCD_VERSION: ${{ input.argocd_version }}
+      run: |
+        curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/download/$ARGOCD_VERSION/argocd-linux-amd64
+        chmod +x argocd-linux-amd64
+        sudo mv argocd-linux-amd64 /usr/local/bin/argocd
+        
+    - name: Create ArgoCD application
+      shell: bash
+      run: |
+        argocd login ${{ secrets.ARGOCD_SERVER }} --username admin --password ${{ secrets.ARGOCD_PASSWORD }} --insecure --grpc-web
+        argocd app create -f application/${{ inputs.service_name }}-argocd-app.yaml || true
+          
+    - name: Sync ArgoCD application
+      shell: bash
+      run: |
+        argocd app sync ${{ inputs.service_name }}
