@@ -86,6 +86,10 @@ jobs:
           release_name: Release ${{ steps.app_version.outputs.version }}
           draft: false
           prerelease: false
+      - uses: actions/checkout@v4
+        name: Checkout
+        with:
+          token: ${{ secrets.ACCESS_TOKEN }}
       - name: generate argocd application
         uses: ./actions/argocd-app-generate
         with:
