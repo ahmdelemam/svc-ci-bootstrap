@@ -87,7 +87,7 @@ jobs:
           draft: false
           prerelease: false
       - name: generate argocd application
-        uses: ./action/argocd-app-generate
+        uses: ./actions/argocd-app-generate
         with:
           service_name: ${{ inputs.service_name }}
           namespace: ${{ inputs.namespace }}
