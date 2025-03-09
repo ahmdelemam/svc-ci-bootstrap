@@ -5,13 +5,24 @@ inputs:
     description: 'ArgoCD CLI version'
     required: true
     default: 'v2.10.0'
+  service_name:
+    description: 'Service name'
+    required: true
+    default: 'service-name'
+secrets:
+  ARGOCD_SERVER:
+    description: 'ArgoCD server'
+    required: true
+  ARGOCD_PASSWORD:
+    description: 'ArgoCD password'
+    required: true
 runs:
  using: "composite"
  steps:
     - name: 'Download ArgoCD CLI'
       shell: bash
       env:
-        ARGOCD_VERSION: ${{ input.argocd_version }}
+        ARGOCD_VERSION: ${{ inputs.argocd_version }}
       run: |
         curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/download/$ARGOCD_VERSION/argocd-linux-amd64
         chmod +x argocd-linux-amd64
