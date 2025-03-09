@@ -24,4 +24,4 @@ jobs:
         ref: env/prod
 
     - name: App Sync
-      uses: ahmdelemam/svc-ci-bootstrap/action/argocd-app-sync/action.yml@main
+      uses: ahmdelemam/svc-ci-bootstrap/actions/argocd-app-sync/action.yml@main
