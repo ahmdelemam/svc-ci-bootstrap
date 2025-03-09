@@ -86,15 +86,13 @@ jobs:
           release_name: Release ${{ steps.app_version.outputs.version }}
           draft: false
           prerelease: false
-      - uses: actions/checkout@v4
-        name: Checkout
-        with:
-          token: ${{ secrets.ACCESS_TOKEN }}
+
       - name: generate argocd application
-        uses: ./actions/argocd-app-generate
+        uses: ahmdelemam/svc-ci-bootstrap/action/argocd-app-generate/action.yml@master
         with:
           service_name: ${{ inputs.service_name }}
           namespace: ${{ inputs.namespace }}
+
       - name: publish charts
         shell: bash
         run: |
