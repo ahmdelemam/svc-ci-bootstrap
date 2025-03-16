@@ -70,10 +70,11 @@ jobs:
         cp -r base-helm-charts/charts/* charts/
         rm -rf base-helm-charts
         REPO_NAME=${{ inputs.service_name }}
+        VERSION=${{ needs.build-docker-image.outputs.version }}
           for file in charts/**/*; do
             if [ -f "$file" ]; then
               sed -i "s#<CHART_NAME>#${REPO_NAME}#g" "$file"
-              sed -i "s#<CHART_APP_VERSION>#${{ needs.build-docker-image.outputs.version }}#g" "$file"
+              sed -i "s#<CHART_APP_VERSION>#${VERSION}#g" "$file"
             fi
           done
           sed -i "s#<CHART_NAME>#${REPO_NAME}#g" charts/Chart.yaml
