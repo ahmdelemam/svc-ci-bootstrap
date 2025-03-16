@@ -78,7 +78,7 @@ jobs:
 
   publish:
       runs-on: ubuntu-latest
-      needs: build
+      needs: build-chart
       steps:
       - uses: actions/checkout@v4
         name: Checkout
