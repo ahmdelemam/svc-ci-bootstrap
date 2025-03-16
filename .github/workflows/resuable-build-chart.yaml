@@ -24,10 +24,10 @@ jobs:
     - name: build charts
       shell: bash
       run: |
-        git clone https://github.com/mohamedragab2024/k8s-lessons.git
+        git clone https://github.com/mohamedragab2024/base-helm-charts.git
         mkdir -p charts
-        cp -r k8s-lessons/charts/* charts/
-        rm -rf k8s-lessons
+        cp -r base-helm-charts/charts/* charts/
+        rm -rf base-helm-charts
         REPO_NAME=${{ inputs.service_name }}
           for file in charts/**/*; do
             if [ -f "$file" ]; then
