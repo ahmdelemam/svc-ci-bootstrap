@@ -25,13 +25,13 @@ jobs:
       version: ${{ steps.app_version.outputs.version }}
     steps:
       - name: create new version
-      id: app_version
-      shell: bash
-      run: |
-        VERSION=$(date +'%Y.%m.%d')-$(date +'%H%M')
-        echo "Version: $VERSION"
-        echo "CHART_VERSION=$VERSION" >> "$GITHUB_ENV"
-        echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+        id: app_version
+        shell: bash
+        run: |
+          VERSION=$(date +'%Y.%m.%d')-$(date +'%H%M')
+          echo "Version: $VERSION"
+          echo "CHART_VERSION=$VERSION" >> "$GITHUB_ENV"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Checkout code
         uses: actions/checkout@v4
