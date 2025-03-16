@@ -21,8 +21,6 @@ jobs:
     outputs:
       version: ${{ steps.app_version.outputs.version }}
     runs-on: ubuntu-latest
-    outputs:
-      version: ${{ steps.app_version.outputs.version }}
     steps:
       - name: create new version
         id: app_version
