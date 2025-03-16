@@ -115,7 +115,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         with:
-          tag_name: ${{ needs.build-docker-image.app_version.outputs.version }}
+          tag_name: ${{ needs.build-docker-image.outputs.version }}
           release_name: Release ${{ needs.build-docker-image.outputs.version }}
           draft: false
           prerelease: false
